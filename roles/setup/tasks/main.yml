@@ -19,8 +19,9 @@
 - name: Activate cgroup on Raspberry Pi OS
   lineinfile:
     path: /boot/cmdline.txt
-    regexp: '^(.*rootwait)$'
+    regexp: '^(.*plymouth.ignore-serial-consoles)$'
     line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
     backrefs: true
+    state: present
   notify:
     - Reboot Raspberry Pi OS

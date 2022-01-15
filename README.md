@@ -51,8 +51,8 @@ ansible-playbook site.yml
 
 ## Useful troubleshooting commands
 
-export K3S_TOKEN=K104034b91ca1d1211afe79af657d385f08c4e096699841446488dbdbd551b47bc1::server:f433a184917422ea691f27b2c566550f
-export K3S_URL=https://192.168.4.42:6443
+export K3S_TOKEN=K10bad670bbf2f7c7e1af98bbcc1da126e1fd32c6c2f397acfeb2f3d4bf97253020::server:4062ab749e59d7288d004dd14c161447
+export K3S_URL=https://192.168.4.241:6443
 export KUBECONFIG=/Users/sbailey/.kube/config-rpi-k3s
 
 k3s-killall.sh

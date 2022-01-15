@@ -8,16 +8,16 @@
     - { role: uninstall }
     - { role: setup }
 
-- name: Set up Master Node
-  hosts: master
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: k3s-master }
+# - name: Set up Master Node
+#   hosts: master
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: k3s-master }
 
-- name: Set up Worker Node
-  hosts: node
-  gather_facts: yes
-  become: yes
-  roles:
-    - { role: k3s-node }
+# - name: Set up Worker Node
+#   hosts: node
+#   gather_facts: yes
+#   become: yes
+#   roles:
+#     - { role: k3s-node }
