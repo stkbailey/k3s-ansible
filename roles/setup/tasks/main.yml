@@ -1,0 +1,26 @@
+- name: Delete Server k3s if already present
+  shell:
+    cmd: k3s-uninstall.sh
+    removes: /usr/local/bin/k3s-uninstall.sh
+
+- name: Delete Agent k3s if already present
+  shell:
+    cmd: k3s-agent-uninstall.sh
+    removes: /usr/local/bin/k3s-agent-uninstall.sh
+
+- name: Download k3s Install Script
+  get_url:                                                           
+    url: https://get.k3s.io
+    dest: "{{ k3s_install_path }}"
+    owner: root
+    group: root
+    mode: 755
+
+- name: Activate cgroup on Raspberry Pi OS
+  lineinfile:
+    path: /boot/cmdline.txt
+    regexp: '^(.*rootwait)$'
+    line: '\1 cgroup_enable=cpuset cgroup_memory=1 cgroup_enable=memory'
+    backrefs: true
+  notify:
+    - Reboot Raspberry Pi OS

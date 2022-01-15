@@ -1,4 +1,4 @@
-k3s_version: v0.5.0
-ansible_user: debian
 systemd_dir: /etc/systemd/system
 master_ip: "{{ hostvars[groups['master'][0]]['ansible_host'] | default(groups['master'][0]) }}"
+k3s_install_path: /tmp/k3s-install.sh
+router_static_ip: "192.168.4.1"

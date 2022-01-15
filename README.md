@@ -49,3 +49,49 @@ Start provisioning of the cluster using the following command:
 ansible-playbook site.yml
 ```
 
+## Useful troubleshooting commands
+
+export K3S_TOKEN=K104034b91ca1d1211afe79af657d385f08c4e096699841446488dbdbd551b47bc1::server:f433a184917422ea691f27b2c566550f
+export K3S_URL=https://192.168.4.42:6443
+export KUBECONFIG=/Users/sbailey/.kube/config-rpi-k3s
+
+k3s-killall.sh
+k3s-uninstall.sh
+k3s-agent-uninstall.sh
+
+--
+
+NAME: postgres
+LAST DEPLOYED: Sat Jan 15 06:23:07 2022
+NAMESPACE: default
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+CHART NAME: postgresql
+CHART VERSION: 10.16.1
+APP VERSION: 11.14.0
+
+** Please be patient while the chart is being deployed **
+
+PostgreSQL can be accessed via port 5432 on the following DNS names from within your cluster:
+
+    postgres-postgresql.default.svc.cluster.local - Read/Write connection
+
+To get the password for "postgres" run:
+
+    export POSTGRES_PASSWORD=$(kubectl get secret --namespace default postgres-postgresql -o jsonpath="{.data.postgresql-password}" | base64 --decode)
+
+To connect to your database run the following command:
+
+    kubectl run postgres-postgresql-client --rm --tty -i --restart='Never' --namespace default --image docker.io/bitnami/postgresql:11.14.0-debian-10-r28 --env="PGPASSWORD=$POSTGRES_PASSWORD" --command -- psql --host postgres-postgresql -U postgres -d postgres -p 5432
+
+
+
+To connect to your database from outside the cluster execute the following commands:
+
+    kubectl port-forward --namespace default svc/postgres-postgresql 5432:5432 &
+    PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432
+
+
+    https://marclamberti.com/blog/airflow-on-kubernetes-get-started-in-10-mins/

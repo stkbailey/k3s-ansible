@@ -1,0 +1,30 @@
+---
+
+- name: Kill all services
+  shell:
+    cmd: k3s-killall.sh
+    removes: /usr/local/bin/k3s-killall.sh
+
+- name: Delete Server k3s if already present
+  shell:
+    cmd: k3s-uninstall.sh
+    removes: /usr/local/bin/k3s-uninstall.sh
+
+- name: Delete Agent k3s if already present
+  shell:
+    cmd: k3s-agent-uninstall.sh
+    removes: /usr/local/bin/k3s-agent-uninstall.sh
+
+- name: Insert/Update eth0 configuration stanza in /etc/dhcpcd.conf
+  blockinfile:
+    path: /etc/dhcpcd.conf
+    block: |
+
+      # Static configuration for Raspberry Pi 
+      interface eth0
+      static ip_address={{host_static_ip}}/24
+      static routers={{router_static_ip}}
+      static domain_name_servers={{router_static_ip}}
+
+  notify:
+    - Reboot Raspberry Pi OS

@@ -1,0 +1,7 @@
+---
+
+- name: Run k3s install script
+  shell: "{{ k3s_install_path }}"
+  environment:
+    K3S_TOKEN: "{{ hostvars[groups['master'][0]]['token'] }}"
+    K3S_URL: "https://{{ master_ip }}:6443"
